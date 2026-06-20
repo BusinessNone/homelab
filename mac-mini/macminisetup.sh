@@ -122,7 +122,7 @@ else
   log "Enabling Remote Login..."
   sudo_run "systemsetup -setremotelogin on"
 fi
-verify "Remote Login is On" "systemsetup -getremotelogin" "On"
+verify "Remote Login is On" "sudo systemsetup -getremotelogin" "On"
 
 SS_STATUS=$(launchctl list com.apple.screensharing 2>/dev/null | grep '"PID"' | awk '{print $3}' | tr -d ',')
 log "Screen Sharing launchctl PID: '${SS_STATUS}'"
