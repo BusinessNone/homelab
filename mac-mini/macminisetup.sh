@@ -124,16 +124,17 @@ else
 fi
 verify "Remote Login is On" "sudo systemsetup -getremotelogin" "On"
 
-SS_STATUS=$(launchctl list com.apple.screensharing 2>/dev/null | grep '"PID"' | awk '{print $3}' | tr -d ',')
+SS_STATUS=$(sudo launchctl list com.apple.screensharing 2>/dev/null | grep '"PID"' | awk '{print $3}' | tr -d ',')
 log "Screen Sharing launchctl PID: '${SS_STATUS}'"
 if [[ -n "$SS_STATUS" && "$SS_STATUS" != "0" ]]; then
   ok "Screen Sharing already running (PID ${SS_STATUS}) — skipping"
 else
   log "Loading Screen Sharing..."
-  sudo_run "launchctl load -w /System/Library/LaunchDaemons/com.apple.screensharing.plist"
+  sudo_run "launchctl enable system/com.apple.screensharing"
+  sudo_run "launchctl bootstrap system /System/Library/LaunchDaemons/com.apple.screensharing.plist"
 fi
 verify "Screen Sharing loaded" \
-  "launchctl list com.apple.screensharing 2>/dev/null" \
+  "sudo launchctl list com.apple.screensharing 2>/dev/null" \
   "com.apple.screensharing"
 
 # =============================================================================
