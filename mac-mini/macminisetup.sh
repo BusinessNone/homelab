@@ -308,7 +308,7 @@ fi
 TS_STATUS=$(tailscale status 2>/dev/null || echo "not connected")
 if echo "$TS_STATUS" | grep -qi "logged out\|stopped\|NeedsLogin\|not connected"; then
   log "Joining Tailscale..."
-  sudo_run "tailscale up --hostname='${TAILSCALE_HOSTNAME}'"
+  sudo_run "tailscale up --reset --hostname='${TAILSCALE_HOSTNAME}'"
   log ""
   log "┌──────────────────────────────────────────────────────────────┐"
   log "│  Tailscale will print an auth URL above.                    │"
