@@ -17,8 +17,7 @@
 # --------------- HARDCODED CONFIG BLOCK — edit before running ----------------
 MINI_USER="benvollmer"                   # your macOS account short name
 OLLAMA_MODELS=("qwen3:8b")              # models to pull after install
-HEADSCALE_URL="https://hs.example.com"  # your Headscale control-plane URL
-HEADSCALE_HOSTNAME="macmini"            # hostname registered in Headscale
+TAILSCALE_HOSTNAME="macmini"            # hostname to advertise on Tailscale
 OLLAMA_VERIFY_MODEL="qwen3:8b"          # model used to verify Metal GPU
 # -----------------------------------------------------------------------------
 
@@ -289,7 +288,7 @@ log "      Must be granted manually — see checklist at end of script."
 # =============================================================================
 log ""
 log "════════════════════════════════════════════"
-log " STEP 6: Headscale (Tailscale CLI)"
+log " STEP 6: Tailscale"
 log "════════════════════════════════════════════"
 
 if brew list tailscale &>/dev/null 2>&1 || brew list --cask tailscale &>/dev/null 2>&1; then
@@ -308,13 +307,12 @@ fi
 
 TS_STATUS=$(tailscale status 2>/dev/null || echo "not connected")
 if echo "$TS_STATUS" | grep -qi "logged out\|stopped\|NeedsLogin\|not connected"; then
-  log "Joining Headscale at ${HEADSCALE_URL}..."
-  sudo_run "tailscale up --login-server='${HEADSCALE_URL}' --hostname='${HEADSCALE_HOSTNAME}'"
+  log "Joining Tailscale..."
+  sudo_run "tailscale up --hostname='${TAILSCALE_HOSTNAME}'"
   log ""
   log "┌──────────────────────────────────────────────────────────────┐"
   log "│  Tailscale will print an auth URL above.                    │"
-  log "│  Visit it, then on your Headscale server run:               │"
-  log "│    headscale nodes register --user <user> --key <key>       │"
+  log "│  Visit it in your browser to approve this device.           │"
   log "└──────────────────────────────────────────────────────────────┘"
 else
   ok "Tailscale already connected: ${TS_STATUS}"
@@ -322,7 +320,7 @@ fi
 
 verify "tailscale status shows hostname" \
   "tailscale status 2>/dev/null" \
-  "${HEADSCALE_HOSTNAME}|100\."
+  "${TAILSCALE_HOSTNAME}|100\."
 
 # =============================================================================
 # SUMMARY
@@ -338,7 +336,7 @@ echo "║                     Screen Sharing (VNC) loaded via launchctl  ✅   �
 echo "║ Step 3  Auto-Login  '${MINI_USER}' (FileVault must be OFF)          ║"
 echo "║ Step 4  Ollama      Native cask + Metal GPU + models pulled  ✅     ║"
 echo "║ Step 5  iMsg-exp    imessage-exporter installed  ✅                 ║"
-echo "║ Step 6  Headscale   tailscale up joined to ${HEADSCALE_URL}         ║"
+echo "║ Step 6  Tailscale   tailscale up joined (hostname: ${TAILSCALE_HOSTNAME})         ║"
 echo "╠══════════════════════════════════════════════════════════════════════╣"
 echo "║           ⚠️  MANUAL STEPS REQUIRED (cannot script these)           ║"
 echo "╠══════════════════════════════════════════════════════════════════════╣"
