@@ -15,7 +15,7 @@
 # =============================================================================
 
 # --------------- HARDCODED CONFIG BLOCK — edit before running ----------------
-MINI_USER="ben"                          # your macOS account short name
+MINI_USER="benvollmer"                   # your macOS account short name
 OLLAMA_MODELS=("qwen3:8b")              # models to pull after install
 HEADSCALE_URL="https://hs.example.com"  # your Headscale control-plane URL
 HEADSCALE_HOSTNAME="macmini"            # hostname registered in Headscale

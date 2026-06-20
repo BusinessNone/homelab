@@ -2,7 +2,7 @@
 # Checks SSH reachability of the Mac mini at session start.
 # Prints a clear status line — does NOT fail the session if unreachable.
 
-MAC_MINI="ben@192.168.10.15"
+MAC_MINI="benvollmer@192.168.10.15"
 TIMEOUT=5
 
 echo "==> Checking SSH connectivity to Mac mini (${MAC_MINI})..."
