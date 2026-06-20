@@ -24,10 +24,10 @@ mac-mini/
 
 | Property | Value |
 |---|---|
-| Host | `ben@192.168.10.15` |
+| Host | `benvollmer@192.168.10.15` |
 | Hardware | Mac mini M4 (headless) |
 | OS | macOS (latest) |
-| User | `ben` |
+| User | `benvollmer` |
 
 ## Conventions
 
