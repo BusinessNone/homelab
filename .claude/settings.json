@@ -1,0 +1,39 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(pmset:*)",
+      "Bash(pmset -g*)",
+      "Bash(launchctl list*)",
+      "Bash(launchctl print*)",
+      "Bash(brew list*)",
+      "Bash(brew info*)",
+      "Bash(brew outdated*)",
+      "Bash(brew --version*)",
+      "Bash(ollama list*)",
+      "Bash(ollama ps*)",
+      "Bash(ollama show*)",
+      "Bash(tailscale status*)",
+      "Bash(tailscale ping*)",
+      "Bash(tailscale ip*)",
+      "Bash(ssh -o ConnectTimeout=* ben@192.168.10.15 *)",
+      "Bash(ssh ben@192.168.10.15 *)",
+      "Bash(pgrep*)",
+      "Bash(command -v *)",
+      "Bash(defaults read*)",
+      "Bash(systemsetup -get*)",
+      "Bash(fdesetup status*)"
+    ]
+  },
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "$CLAUDE_PROJECT_DIR/.claude/hooks/session-start.sh"
+          }
+        ]
+      }
+    ]
+  }
+}
